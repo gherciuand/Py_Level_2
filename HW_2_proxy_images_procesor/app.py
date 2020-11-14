@@ -23,9 +23,7 @@ def observe(directory):
     while True:
         fileList = img(directory)
         if lastFileList != fileList:
-
-
-            print(" ceva schimbari")
+            print(">>> ACHTUNG!!! you have a modification <<<")
 
         lastFileList = fileList
         sleep(0.5)
