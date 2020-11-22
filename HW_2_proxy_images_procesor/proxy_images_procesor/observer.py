@@ -7,9 +7,9 @@ extensii_acceptate = [".jpg", ".jpeg", ".png"]
 
 
 class Observer:
-    def __init__(self, original_dir):
+    def __init__(self, original_dir, transformed_path):
         self.original = original_dir
-        self.transformer = TransformerProxy(self.original, "./images/processed")
+        self.transformer = TransformerProxy(self.original, transformed_path)
 
     def observe(self):
 

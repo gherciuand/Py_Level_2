@@ -12,5 +12,5 @@ if not path.isdir(original_path):
 if not path.isdir(transformed_path):
     mkdir(transformed_path)
 
-obs = Observer(original_path)
+obs = Observer(original_path, transformed_path)
 obs.observe()
