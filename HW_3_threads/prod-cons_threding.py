@@ -14,12 +14,13 @@ class Producer(Thread):
 
     def run(self):
         global mobilePhones
+        lock.acquire()
         sleep(random())
 
         mobilePhones.append({"brand": self.brand, "model": "iPhone XII"})
         print(f'Factory {self.brand} produced a phone')
-        lock.acquire()
-        condition.notify()
+
+        #condition.notify(5)
         lock.release()
 
 
@@ -30,21 +31,21 @@ class Consumer(Thread):
 
     def run(self):
         sleep(random())
-
+        lock.acquire()
         global mobilePhones
         mobile = mobilePhones.pop()
         print(f" {self.name} takes >>> PHONE: {mobile['brand']} | {mobile['model']}")
         print(f' remain in stock {mobilePhones}')
-        lock.acquire()
-        condition.wait()
+        #condition.wait()
         lock.release()
 
 
 factory = Producer("Apple")
 cons = Consumer("Andrei")
 cons_2 = Consumer("Ion")
+#cons_3 = Consumer("Dima")
 
-while mobilePhones == []:
-      factory.start()
 cons.start()
 cons_2.start()
+#cons_3.start()
+factory.start()
