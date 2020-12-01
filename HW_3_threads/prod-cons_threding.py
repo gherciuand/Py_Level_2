@@ -4,7 +4,7 @@ from random import random
 
 mobilePhones = [{"brand": "Apple", "model": "iPhone XIII"}]
 lock = RLock()
-condition = Condition()
+condition = Condition(lock)
 
 
 class Producer(Thread):
@@ -14,11 +14,12 @@ class Producer(Thread):
 
     def run(self):
         global mobilePhones
-        # sleep(random())
-        lock.acquire()
+        sleep(random())
+
         mobilePhones.append({"brand": self.brand, "model": "iPhone XII"})
         print(f'Factory {self.brand} produced a phone')
-        # condition.notify(5)
+        lock.acquire()
+        condition.notify()
         lock.release()
 
 
@@ -28,20 +29,22 @@ class Consumer(Thread):
         self.name = name
 
     def run(self):
-        # sleep(random())
-        lock.acquire()
-        # condition.wait(5)
+        sleep(random())
 
         global mobilePhones
         mobile = mobilePhones.pop()
         print(f" {self.name} takes >>> PHONE: {mobile['brand']} | {mobile['model']}")
         print(f' remain in stock {mobilePhones}')
+        lock.acquire()
+        condition.wait()
         lock.release()
 
 
 factory = Producer("Apple")
 cons = Consumer("Andrei")
 cons_2 = Consumer("Ion")
-factory.start()
+
+while mobilePhones == []:
+      factory.start()
 cons.start()
 cons_2.start()
