@@ -1,17 +1,22 @@
 import socket
 import json
-
 HOST = '127.0.0.1'
 PORT = 11111
-data = {'lista': [10, 20, 35]}
-print('Client STARTED')
-clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+DATA = {'lista': [10, 20, 35]}
 
-clientSocket.connect((HOST, PORT))
+class DataClient:
+    def __init__(self, host, port, data):
+        self.host = host
+        self.data = data
+        self.port = port
 
+    def getData(self):
+        clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        clientSocket.connect((self.host, self.port))
+        clientSocket.send(json.dumps(self.data).encode())
+        print(f'Client send data\n {self.data}')
+        self.data = json.loads(clientSocket.recv(1024))
+        print(f'Client receive new data from server\n {self.data}')
 
-print('Client>> sendnding the data')
-clientSocket.send(json.dumps(data).encode())
-data = json.loads(clientSocket.recv(1024))
-print(f'Client received calculated data from server\n {data}')
-print('Client FINESHED')
+client = DataClient(HOST,PORT,DATA)
+client.getData()
