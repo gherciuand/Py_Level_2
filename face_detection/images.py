@@ -15,5 +15,5 @@ def saveImage(url, name):
         urllib.request.urlretrieve(url, f'{IMAGE_BASE_FOLDER}/{name}/0000.jpg')  # save first image
     else:
         last_img = list(Path(f'{IMAGE_BASE_FOLDER}/{name}').glob('*.jpg'))[-1].stem
-        next_img = (last_img.join(['{0:04}'.format((int(last_img) + 1))]))  #set name for the next image
-        urllib.request.urlretrieve(url, f'{IMAGE_BASE_FOLDER}/{name}/{next_img}.jpg') # save next image
+        next_img = (last_img.join(['{0:04}'.format((int(last_img) + 1))]))      #set name for the next image
+        urllib.request.urlretrieve(url, f'{IMAGE_BASE_FOLDER}/{name}/{next_img}.jpg')   # save next image
