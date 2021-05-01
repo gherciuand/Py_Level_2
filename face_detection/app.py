@@ -19,7 +19,10 @@ else:
 
 
 img_dict=Search_in_Google(browser, names)
+###############################
 
-for name in names:
-    for img in range(len(img_dict[name])):
-        saveImage(img, name)
+#>>>>>>>>De facut legatura cu saveImage ######
+
+#for name in names:
+#    for img in range(len(img_dict[name])):
+#        saveImage(img, name)
